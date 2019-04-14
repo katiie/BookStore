@@ -22,27 +22,24 @@
                 <!--The div element for the map -->
                 <div class="card-body">
                     <div id="map"></div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-                <script>
-        var markers;
-
-
-        window.onload = function () {
-            $.post("/home/AllStores",
-                function (data, status) {
-                    console.log(data)
-                    var objecf = [];
-                    $.each(data, function (index, value) {
-                        console.log(value);
-                        objecf.push(value);
-                   })
-                    markers = objecf;
-                    console.log(markers)
-                    LoadMap();
+</div>
+<script>
+    var markers;
+    window.onload = function () {
+        $.post("/home/AllStores",
+            function (data, status) {
+                var objecf = [];
+                $.each(data, function (index, value) {
+                    console.log(value);
+                    objecf.push(value);
+                })
+                markers = objecf;
+                console.log(markers)
+                LoadMap();
             });
 
     }
@@ -66,7 +63,7 @@
             });
             (function (marker, data) {
                 google.maps.event.addListener(marker, "click", function (e) {
-                    infoWindow.setContent("<div style = 'width:200px;min-height:40px'>" + data.name + "</div>");
+                    infoWindow.setContent("<div style = 'width:150px;min-height:30px'>" + data.name + "</div>");
                     infoWindow.open(map, marker);
                 });
             })(marker, data);
@@ -76,12 +73,8 @@
         map.setCenter(latlngbounds.getCenter());
         map.fitBounds(latlngbounds);
     }
-                </script>
-                <!--Load the API from the specified URL
-                * The async attribute allows the browser to render the page while the API loads
-                * The key parameter will contain your own API key (which is not needed for this tutorial)
-                * The callback parameter executes the initMap() function
-                -->
-                <script async defer
-                        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBO9JH-hp8L1Sl6M-l4Ml_uQZ-NWe09XbA&callback=initMap">
-                </script>
+</script>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBO9JH-hp8L1Sl6M-l4Ml_uQZ-NWe09XbA&callback=initMap">
+</script>

@@ -76,39 +76,14 @@
 
 @section Scripts{
 
-    <script type="text/javascript">
-        function initGeolocation() {
-            if (navigator.geolocation) {
-                // Call getCurrentPosition with success and failure callbacks
-                navigator.geolocation.getCurrentPosition(success, fail);
-            }
-            else {
-                alert("Sorry, your browser does not support geolocation services.");
-            }
-        }
-
-        function success(position) {
-
-            document.getElementById('long').value = position.coords.longitude;
-            document.getElementById('lat').value = position.coords.latitude
-        }
-
-        function fail() {
-            // Could not obtain location
-        }
-
-    </script>
     <script>
         var table;
-        var lat=0;
-        var lng=0;
         $(document).ready(function () {
             $('#datatable2').dataTable({
                 "lengthChange": false,
                 "dom": 'lrtip',
 
             });
-            //  $('.dataTable').DataTable();
             $('.selectpicker').on('change', function () {
                 filterSearch();
             });
