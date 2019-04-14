@@ -1,0 +1,224 @@
+﻿@model IEnumerable<Bookstore.Core.Models.Book>
+@{
+    ViewData["Title"] = "Index";
+}
+<h2>Index</h2>
+<p>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bookModal" data-isnew="true">
+        New
+    </button>
+
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateModified)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateModified)
+                </td>
+                <td>
+                    @Html.ActionLink("AddStock", "Stock", new { id = item.Id }) |
+                    <button id="@item.Id" type="button" class="btn btn-danger" data-toggle="modal" data-target="#bookModal"
+                            data-isnew="false" data-name="@item.Name" data-author="@item.Author" data-isbn="@item.ISBN"
+                            data-description="@item.Description" >
+                        New
+                    </button>
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    <a id="delete" data-name="@item.Name" data-pid="@item.Id" data-isbn="@item.ISBN">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form action="/" method="post">
+                    <div class="form-group">
+                        <p id="delete message"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="bookModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="bookform">
+                    <input hidden name="actionType" id="actionType" />
+                    <input hidden name="Id" id="Id" />
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="bname form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ISBN" class="control-label"></label>
+                        <input asp-for="ISBN" class="bisbn form-control" />
+                        <span asp-validation-for="ISBN" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Author" class="control-label"></label>
+                        <input asp-for="Author" class="bauthor form-control" />
+                        <span asp-validation-for="Author" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" maxlength="30" class="bdescription form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="bsubmit btn btn-primary"></button>
+                    </div>
+                </form>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $('#newModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('isnew')
+            if (recipient === true) {
+                var modal = $(this)
+                modal.find('.modal-title').text('Add')
+                modal.find('.bsubmit').innerHtml('Save')
+                modal.find('#actiontype').innerHtml('New')
+            }
+            else if (recipient === false) {
+                var modal = $(this)
+                modal.find('.modal-title').text('Edit')
+                modal.find('.bname').text(button.data('name'))
+                modal.find('.bauthor').text(button.data('author'))
+                modal.find('.bisbn').text(button.data('isbn'))
+                modal.find('.bdescription').text(button.data('description'))
+                modal.find('.bsubmit').innerHtml('Update')
+                modal.find('#actiontype').innerHtml('Update')
+                modal.find('#Id').innerHtml($(event.relatedTarget).id)
+            }
+            
+        })
+        $('.bsubmit').on('click', function (event) {
+            var button = $(event.relatedTarget)
+            e.preventDefault();
+            var url = "book/create";
+            if ($('actionType').val == "Update")
+                url = "book/Edit"
+           
+            //$('body').loading({
+            //    stoppable: false
+            //});
+            var form = $(this).parents('form:first');
+            var validator = $("#bookform").validate({
+                errorPlacement: function (error, element) {
+                    $(element).parents('.form-group').append(error)
+                }
+            });
+
+
+            var result = form.valid();
+
+            if (result) {
+            $.ajax
+                ({
+                    type: "Post",
+                    url: '/Book/Create',
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function (result) {
+                        $message = result.Message;
+                        $status = result.status;
+                        if (result.Success) {
+                            $('body').loading('stop');
+                            $('table #' + e.target.id).remove();
+                            var replymessage = 'Application was deleted successfully.';
+                            $('#exampleModalLabel').html(replymessage);
+                            window.location.hash = '#divalert';
+                            $('#divalert').show();
+                        }
+                        else {
+                            $('#exampleModalLabel').html(result.Message);
+                            window.location.hash = '#divalert';
+                            $('#divalert').show();
+                            $('body').loading('stop');
+                        }
+                    },
+                    error: function (xhr, status, p3, p4) {
+                        $('body').loading('stop');
+                        var err = "Error " + " " + status + " " + p3 + " " + p4;
+                        if (xhr.responseText && xhr.responseText[0] === "{")
+                            err = JSON.parse(xhr.responseText).Message;
+                    }
+                });
+            })
+        }
+         else {
+
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                validator.errorList[0].element.focus();
+            }
+            $('body').loading('stop');
+        }
+    </script>
+}

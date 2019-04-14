@@ -1,0 +1,48 @@
+﻿@model Bookstore.Core.Models.User
+
+@{
+    ViewData["Title"] = "SignIn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="content">
+    <div class="container">
+        <div class="col-md-4 ml-auto mr-auto">
+            <div class="card card-lock text-center">
+               
+                <div class="card-body">
+                    <form class="text-center border border-light p-5" asp-action="SignIn" asp-controller="Account">
+
+                        <p class="h4 mb-4">Sign in</p>
+
+                        <!-- Email -->
+                        <input type="email" required asp-for="Email" class="form-control mb-4" placeholder="E-mail"/>
+
+                        <!-- Password 
+                        <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
+                            -->
+
+                        <!-- Sign in button -->
+                        <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
+
+                        <!-- Register -->
+                        <p>
+                            Not a member?
+                            <a href="@Url.Action("Register", "Account")">Register</a>
+                        </p>
+                        <p>@ViewBag.Message</p>
+                       
+                    </form>
+                  
+                </div>
+                <div class="card-footer ">
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

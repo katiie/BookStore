@@ -1,0 +1,353 @@
+﻿@model IEnumerable<Bookstore.Core.Models.Store>
+@{
+    ViewData["Title"] = "Stores";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section styles{
+    <style>
+        div.pac-container {
+            z-index: 99999999999 !important;
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBO9JH-hp8L1Sl6M-l4Ml_uQZ-NWe09XbA&libraries=places"
+            async defer></script>
+}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title ">Stores</h4>
+                </div>
+                <div class="card-body">
+                    <p>
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#popupModal" data-isnew="true">
+                            New
+                        </button>
+
+
+                    </p>
+                    <div class="table-responsive">
+                        <table id="datatable2" class="table" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>State</th>
+                                    <th>Address</th>
+                                    
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Actions</th>
+
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>State</th>
+                                    <th>Address</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Actions</th>
+
+                                </tr>
+                            </tfoot>
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Store</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="inputform">
+                    @Html.AntiForgeryToken()
+                    <input hidden name="actionType" id="actionType" />
+                    <input hidden name="Id" id="Id" />
+                    <input hidden name="Longitude" id="lng" />
+                    <input hidden name="Latitude" id="lat" />
+                   
+                    <div class="form-group">
+                        <label class="control-label">Store Name</label>
+                        <div id="locationField">
+                            <input id="sname" name="Name" type="text" size="50" required class="sname form-control">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label"></label>
+                        <div id="locationField">
+                            <input id="searchTextField" name="Address" type="text" size="50" required class="bname form-control">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label">State</label>
+                        <input name="State" id="locality" readonly required class="bstate form-control" />
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="bsubmit btn btn-primary"></button>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script>
+        var componentForm = {
+            locality: 'long_name'
+     };
+        var autocomplete;
+        function initialize() {
+            var options = {
+                //types: ['(cities)'],
+                componentRestrictions: { country: "NG" }
+            };
+
+            var input = document.getElementById('searchTextField');
+            autocomplete = new google.maps.places.Autocomplete(input, options);
+            autocomplete.addListener('place_changed', fillInAddress);
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+        function fillInAddress() {
+            // Get the place details from the autocomplete object.
+            var place = autocomplete.getPlace();
+            var lat = place.geometry.location.lat();
+            var lng = place.geometry.location.lng();
+            //clear state form
+            document.getElementById('locality').value = '';
+            for (var i = 0; i < place.address_components.length; i++) {
+                var addressType = place.address_components[i].types[0];
+                console.log(addressType);
+                if (componentForm[addressType]) {
+                    var val = place.address_components[i][componentForm[addressType]];
+                    document.getElementById(addressType).value = val;
+                }
+            }
+            document.getElementById('lat').value = lat;
+            document.getElementById('lng').value = lng;
+        }
+
+        
+    </script>
+    <script>
+        var table;
+        
+        $(function () {
+            'use strict';
+            table = $('#datatable2').DataTable({
+                bLengthChange: true,
+                searching: true,
+                responsive: true,
+                "ajax": {
+                    "url": "Store/AllStoreLocations", "dataSrc": ""
+                },
+
+                columns: [
+
+                    { data: "name" },
+                    { data: "state" },
+                    { data: "address" },
+                    { data: "id" },
+                    { data: "lat" },
+                    {data:"lng"},
+                    {
+                        data: null,
+                        className: "",
+                        defaultContent: '<a href="" class="btn btn-default editor_edit">Edit</a>  <a href="" class="btn btn-danger editor_remove">Delete</a>'
+                    }
+                ],
+                "columnDefs": [
+                    {
+                        "targets": [3],
+                        "visible": false,
+                        "searchable": false,
+                        "orderable": false
+
+                    },
+                    {
+                        "targets": [4],
+                        "visible": false,
+                        "searchable": false,
+                        "orderable": false
+
+                    },
+                     {
+                        "targets": [5],
+                        "visible": false,
+                        "searchable": false,
+                        "orderable": false
+
+                    }
+
+                ]
+            });
+
+
+            $('#datatable2 tbody').on('click', 'a.editor_edit', function (e) {
+                e.preventDefault();
+                var $td = table.row($(this).parents('tr')).data();
+                $('.bsubmit').html('Save')
+                console.log($td)
+                $('#Id').val($td.id);
+                $('.bstate').val($td.state);
+                $('.bname').val($td.address);
+                $('.sname').val($td.name);
+                document.getElementById('lat').value = $td.lat;
+                document.getElementById('lng').value = $td.lng;
+                $('#actionType').val('Update');
+                $('#popupModal').modal('show');
+            });
+
+            // Delete a record
+            $('#datatable2 tbody').on('click', 'a.editor_remove', function (e) {
+                e.preventDefault();
+                var $td = table.row($(this).parents('tr')).data();
+                var title = $td.name;
+                var id = $td.id;
+                var txt;
+                var res = confirm("All records asscoiated with " + title + " !", );
+                if (res == true) {
+                    $.ajax
+                        ({
+                            type: "POST",
+                            url: 'Store/Delete?Id=' + id,
+                            contentType: false,
+                            processData: false,
+                            success: function (result) {
+                                debugger;
+                                if (result.success) {
+                                    table.ajax.reload();
+                                    $('#datatable2').loading('toggle');
+                                } else {
+                                    console.log("An error occured");
+                                    $('#datatable2').loading('toggle');
+                                }
+                                $('#datatable2').loading('toggle');
+                            },
+                            error: function (xhr, status, p3, p4) {
+                                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                                if (xhr.responseText && xhr.responseText[0] === "{")
+                                    err = JSON.parse(xhr.responseText).Message;
+                                console.log(err);
+                                $('#datatable2').loading('toggle');
+
+                            }
+                        });
+
+                }
+            });
+        });
+        $('#popupModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('isnew')
+            if (recipient === true) {
+                var modal = $(this)
+                modal.find('.modal-title').text('Add Store')
+                modal.find('#actionType').val('New')
+                $('.bsubmit').prop('value', 'Save')
+                $('.bsubmit').html('Save')
+            }
+
+        })
+        $('.bsubmit').on('click', function (event) {
+            event.preventDefault();
+            var url = "Store/create";
+            $('body').loading({
+                stoppable: false
+            });
+            var form = $(this).parents('form:first');
+            var validator = $("#inputform").validate({
+                errorPlacement: function (error, element) {
+                    $(element).parents('.form-group').append(error)
+                }
+            });
+
+            var result = form.valid();
+            if (result) {
+                var data = new FormData();
+                var form = $(this).closest('form');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+                $.each(form.serializeArray(), function (key, input) {
+                    data.append(input.name, input.value);
+                });
+                console.log(data)
+                $.ajax
+                    ({
+                        type: "Post",
+                        url: url,
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        success: function (result) {
+                            debugger;
+                            console.log(result)
+                            $message = result.message;
+                            $status = result.status;
+                            if (result.success) {
+                                table.ajax.reload();
+                                clearModal();
+                                $('#popupModal').modal('hide');
+                            }
+                            else {
+                                alert($message);
+                                $('.preloader').hide();
+                                $status = "error";
+                            }
+                            $('body').loading('stop');
+
+                        },
+                        error: function (xhr, status, p3, p4) {
+                            $('body').loading('stop');
+                            var err = "Error " + " " + status + " " + p3 + " " + p4;
+                            if (xhr.responseText && xhr.responseText[0] === "{")
+                                err = JSON.parse(xhr.responseText).Message;
+                        }
+                    });
+            }
+            else {
+
+                var errors = validator.numberOfInvalids();
+                if (errors) {
+                    validator.errorList[0].element.focus();
+                }
+                $('body').loading('stop');
+            }
+        })
+
+      
+    </script>
+
+}
+

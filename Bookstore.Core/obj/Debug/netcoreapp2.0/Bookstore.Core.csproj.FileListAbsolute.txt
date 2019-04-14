@@ -1,0 +1,9 @@
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Core\bin\Debug\netcoreapp2.0\Bookstore.Core.deps.json
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Core\bin\Debug\netcoreapp2.0\Bookstore.Core.dll
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Core\bin\Debug\netcoreapp2.0\Bookstore.Core.pdb
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Core\obj\Debug\netcoreapp2.0\Bookstore.Core.csprojResolveAssemblyReference.cache
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Core\obj\Debug\netcoreapp2.0\Bookstore.Core.csproj.CoreCompileInputs.cache
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Core\obj\Debug\netcoreapp2.0\Bookstore.Core.AssemblyInfoInputs.cache
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Core\obj\Debug\netcoreapp2.0\Bookstore.Core.AssemblyInfo.cs
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Core\obj\Debug\netcoreapp2.0\Bookstore.Core.dll
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Core\obj\Debug\netcoreapp2.0\Bookstore.Core.pdb

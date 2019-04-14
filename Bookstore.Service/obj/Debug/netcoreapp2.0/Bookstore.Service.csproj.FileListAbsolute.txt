@@ -1,0 +1,15 @@
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Service\bin\Debug\netcoreapp2.0\Bookstore.Service.deps.json
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Service\bin\Debug\netcoreapp2.0\Bookstore.Service.runtimeconfig.json
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Service\bin\Debug\netcoreapp2.0\Bookstore.Service.runtimeconfig.dev.json
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Service\bin\Debug\netcoreapp2.0\Bookstore.Service.dll
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Service\bin\Debug\netcoreapp2.0\Bookstore.Service.pdb
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Service\obj\Debug\netcoreapp2.0\Bookstore.Service.csprojResolveAssemblyReference.cache
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Service\obj\Debug\netcoreapp2.0\Bookstore.Service.csproj.CoreCompileInputs.cache
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Service\obj\Debug\netcoreapp2.0\Bookstore.Service.AssemblyInfoInputs.cache
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Service\obj\Debug\netcoreapp2.0\Bookstore.Service.AssemblyInfo.cs
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Service\obj\Debug\netcoreapp2.0\Bookstore.Service.dll
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Service\obj\Debug\netcoreapp2.0\Bookstore.Service.pdb
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Service\bin\Debug\netcoreapp2.0\Bookstore.Core.dll
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Service\bin\Debug\netcoreapp2.0\Bookstore.Data.dll
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Service\bin\Debug\netcoreapp2.0\Bookstore.Data.pdb
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Bookstore.Service\bin\Debug\netcoreapp2.0\Bookstore.Core.pdb

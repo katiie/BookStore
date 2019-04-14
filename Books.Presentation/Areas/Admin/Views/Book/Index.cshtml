@@ -1,0 +1,291 @@
+﻿@model IEnumerable<Bookstore.Core.Models.Book>
+@{
+    ViewData["Title"] = "Books";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title ">Books</h4>
+                </div>
+                <div class="card-body">
+                    <p>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bookModal" data-isnew="true">
+                            New
+                        </button>
+
+
+                    </p>
+                    <div class="table-responsive m-t-40">
+                        <table id="datatable2" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Author</th>
+                                    <th>ISBN</th>
+                                    <th>Date</th>
+                                    <th></th>
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Author</th>
+                                    <th>ISBN</th>
+                                    <th>Date</th>
+                                    <th></th>
+                                    <th></th>
+
+                                </tr>
+                            </tfoot>
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Book</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="bookform">
+                    @Html.AntiForgeryToken()
+                    <input hidden name="actionType" id="actionType" />
+                    <input hidden name="Id" id="Id" />
+                    <div class="form-group">
+                        <label class="control-label">Name</label>
+                        <input name="Name" placeholder="Book Name" required class="bname form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">ISBN</label>
+                        <input name="ISBN" required  onkeypress="return isNumberKey(event)" class="bisbn form-control" />
+
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Author(Seperate by comma if more than 1)</label>
+                        <input name="Author" required class="bauthor form-control" />
+
+                    </div>
+                    <div class="">
+                        <label class="control-label">Description</label>
+                        <textarea name="Description" maxlength="130" required class="bdescription form-control"></textarea>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="bsubmit btn btn-primary"></button>
+
+                    </div>
+                </form>
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <!-- start - This is for export functionality only -->
+
+    <script>
+        var table; // use a global for the submit and return data rendering in the examples
+
+
+        $(function () {
+            'use strict';
+            table = $('#datatable2').DataTable({
+                bLengthChange: true,
+                searching: true,
+                responsive: true,
+                "ajax": {
+                    "url": "Book/AllBooks", "dataSrc": ""
+                },
+
+                columns: [
+
+                    { data: "name" },
+                    { data: "author" },
+                    { data: "isbn" },
+                    { data: "dateCreated" },
+                    { data: "id" },
+
+
+                    {
+                        data: null,
+                        className: "",
+                        defaultContent: '<a href="" class="btn btn-primary  editor_details">View Stock</a>  <a href="" class="btn btn-default editor_edit">Edit</a>  <a href="" class="btn btn-danger editor_remove">Delete</a>'
+                    }
+                ],
+                "columnDefs": [
+                    {
+                        "targets": [4],
+                        "visible": false,
+                        "searchable": false,
+                        "orderable": false
+
+                    }
+
+                ]
+            });
+            $('#datatable2 tbody').on('click', 'a.editor_details', function (e) {
+                e.preventDefault();
+                var $td = table.row($(this).parents('tr')).data();
+                var id = $td.id;
+                window.location.href = 'Book/Details' + "?Id=" + id;
+            });
+            $('#datatable2 tbody').on('click', 'a.editor_edit', function (e) {
+                e.preventDefault();
+                debugger;
+                var $td = table.row($(this).parents('tr')).data();
+                $('.bsubmit').html('Save')
+                console.log($td)
+                $('#Id').val($td.id);
+                $('.bdescription').val($td.description);
+                $('.bauthor').val($td.author);
+                $('.bisbn').val($td.isbn);
+                $('.bname').val($td.name);
+                $('#actionType').val('Update');
+                $('#bookModal').modal('show');
+            });
+
+            // Delete a record
+            $('#datatable2 tbody').on('click', 'a.editor_remove', function (e) {
+                e.preventDefault();
+                var $td = table.row($(this).parents('tr')).data();
+                var title = $td.name;
+                var id = $td.id;
+                var txt;
+                var res = confirm("All records asscoiated with " + title + " !",);
+                if (res == true) {
+                    $.ajax
+                        ({
+                            type: "POST",
+                            url: 'Delete?Id=' + id,
+                            contentType: false,
+                            processData: false,
+                            success: function (result) {
+                                debugger;
+                                if (result.success) {
+                                    table.ajax.reload();
+                                } else {
+                                    console.log("An error occured");
+                                }
+
+                            },
+                            error: function (xhr, status, p3, p4) {
+                                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                                if (xhr.responseText && xhr.responseText[0] === "{")
+                                    err = JSON.parse(xhr.responseText).Message;
+                                console.log(err);
+                                $('#datatable2').loading('toggle');
+
+                            }
+                        });
+
+                } 
+            });
+        });
+
+       
+
+        $('#bookModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('isnew')
+            if (recipient === true) {
+                var modal = $(this)
+                modal.find('.modal-title').text('Add')
+                modal.find('#actionType').val('New')
+                $('.bsubmit').prop('value', 'Save')
+                $('.bsubmit').html('Save')
+            }
+
+        })
+        $('.bsubmit').on('click', function (event) {
+            event.preventDefault();
+            var url = "Book/create";
+            $('body').loading({
+                stoppable: false
+            });
+            var form = $(this).parents('form:first');
+            var validator = $("#bookform").validate({
+                errorPlacement: function (error, element) {
+                    $(element).parents('.form-group').append(error)
+                }
+            });
+
+            var result = form.valid();
+            if (result) {
+                var data = new FormData();
+                var form = $(this).closest('form');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+                $.each(form.serializeArray(), function (key, input) {
+                    data.append(input.name, input.value);
+                });
+                console.log(data)
+                $.ajax
+                    ({
+                        type: "Post",
+                        url: url,
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        success: function (result) {
+                            debugger;
+                            console.log(result)
+                            $message = result.message;
+                            $status = result.status;
+                            if (result.status) {
+                                table.ajax.reload();
+                                clearModal();
+                                $('#bookModal').modal('hide');
+                            }
+                            else {
+                                alert($message);
+                                $('.preloader').hide();
+                                $status = "error";
+                            }
+                            $('body').loading('stop');
+
+                        },
+                        error: function (xhr, status, p3, p4) {
+                            $('body').loading('stop');
+                            var err = "Error " + " " + status + " " + p3 + " " + p4;
+                            if (xhr.responseText && xhr.responseText[0] === "{")
+                                err = JSON.parse(xhr.responseText).Message;
+                        }
+                    });
+            }
+            else {
+
+                var errors = validator.numberOfInvalids();
+                if (errors) {
+                    validator.errorList[0].element.focus();
+                }
+                $('body').loading('stop');
+            }
+        })
+    </script>
+}

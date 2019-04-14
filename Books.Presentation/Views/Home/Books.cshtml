@@ -1,0 +1,187 @@
+﻿@model IEnumerable<Bookstore.Core.Models.Book>
+@{
+    ViewData["Title"] = "Books";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+@section styles{
+
+}
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+
+                </div>
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <input class="form-control" type="text" placeholder="Search Books" id="example-text-input">
+                        <input class="form-control" hidden type="text" id="searchstring">
+                    </div>
+                    <div class="">
+                        <table id="datatable2" class="table" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th class="" style="display:none">
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="row">
+                                @{
+                                    if (Model != null)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            <tr class="col-md-4 col-lg-4 col-xlg-4" style="background-color:transparent;">
+                                                <td class="card card-body" style="">
+                                                    <div class="">
+                                                        <div class="card-avatar">
+
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <h6 class="card-category text-gray">@item.Name</h6>
+                                                            <h4 class="card-title">@item.Author</h4>
+                                                            <h3 class="card-title">@item.ISBN</h3>
+                                                            <p class="card-description">
+                                                                @item.Description
+                                                            </p>
+                                                            <a href="@Url.Action("BookDetails","Home",new { Id = item.Id})" class="btn btn-primary btn-round">View Stock</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        }
+
+                                    }
+                                }
+
+                            </tbody>
+
+                            <tfoot>
+                                <tr></tr>
+                            </tfoot>
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+        function initGeolocation() {
+            if (navigator.geolocation) {
+                // Call getCurrentPosition with success and failure callbacks
+                navigator.geolocation.getCurrentPosition(success, fail);
+            }
+            else {
+                alert("Sorry, your browser does not support geolocation services.");
+            }
+        }
+
+        function success(position) {
+
+            document.getElementById('long').value = position.coords.longitude;
+            document.getElementById('lat').value = position.coords.latitude
+        }
+
+        function fail() {
+            // Could not obtain location
+        }
+
+    </script>
+    <script>
+        var table;
+        var lat=0;
+        var lng=0;
+        $(document).ready(function () {
+            $('#datatable2').dataTable({
+                "lengthChange": false,
+                "dom": 'lrtip',
+
+            });
+            //  $('.dataTable').DataTable();
+            $('.selectpicker').on('change', function () {
+                filterSearch();
+            });
+            $('#example-text-input').on('keyup', function () {
+                filterSearch();
+            });
+        });
+        function filterSearch() {
+            $('#datatable2').DataTable().search(
+
+                $('#example-text-input').val()
+            ).draw();
+        }
+
+
+        $(function () {
+            'use strict';
+
+            var imageurl = "/Content/FileUploads/";
+            table = $('#datatablee2').DataTable({
+                bLengthChange: true,
+                searching: true,
+                responsive: true,
+                "ajax": {
+                    "url": "AllBooks", "dataSrc": ""
+                },
+
+                columns: [
+
+                    { data: "name" },
+                    { data: "author" },
+                    { data: "isbn" },
+                    { data: "dateCreated" },
+                    { data: "id" },
+
+
+                    {
+                        data: null,
+                        className: "",
+                        defaultContent: '<a href="" class="btn btn-primary  editor_details">Details</a>  '
+                    }
+                    , {
+                        data: "locationTag"
+                    }
+                ],
+                "columnDefs": [
+                    {
+                        "targets": [4],
+                        "visible": false,
+                        "searchable": false,
+                        "orderable": false
+
+                    },
+                    {
+                        "targets": [6],
+                        "visible": false,
+                        "searchable": true,
+                        "orderable": false
+
+                    }
+
+                ]
+            });
+            $('#datatable2 tbody').on('click', 'a.editor_details', function (e) {
+                e.preventDefault();
+                var $td = table.row($(this).parents('tr')).data();
+                var id = $td.id;
+                window.location.href = 'BookDetails' + "?Id=" + id;
+            });
+            
+
+        });
+
+
+    </script>
+}

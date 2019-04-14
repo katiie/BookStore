@@ -1,0 +1,17 @@
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\BookStore\bin\Debug\netcoreapp2.0\BookStore.deps.json
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\BookStore\bin\Debug\netcoreapp2.0\BookStore.runtimeconfig.json
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\BookStore\bin\Debug\netcoreapp2.0\BookStore.runtimeconfig.dev.json
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\BookStore\bin\Debug\netcoreapp2.0\BookStore.dll
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\BookStore\bin\Debug\netcoreapp2.0\BookStore.pdb
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\BookStore\obj\Debug\netcoreapp2.0\BookStore.csproj.CoreCompileInputs.cache
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\BookStore\obj\Debug\netcoreapp2.0\BookStore.AssemblyInfoInputs.cache
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\BookStore\obj\Debug\netcoreapp2.0\BookStore.AssemblyInfo.cs
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\BookStore\obj\Debug\netcoreapp2.0\BookStore.dll
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\BookStore\obj\Debug\netcoreapp2.0\BookStore.pdb
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\BookStore\obj\Debug\netcoreapp2.0\BookStore.csprojResolveAssemblyReference.cache
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\BookStore\bin\Debug\netcoreapp2.0\Bookstore.Core.dll
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\BookStore\bin\Debug\netcoreapp2.0\Bookstore.Data.dll
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\BookStore\bin\Debug\netcoreapp2.0\Bookstore.Service.dll
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\BookStore\bin\Debug\netcoreapp2.0\Bookstore.Core.pdb
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\BookStore\bin\Debug\netcoreapp2.0\Bookstore.Data.pdb
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\BookStore\bin\Debug\netcoreapp2.0\Bookstore.Service.pdb

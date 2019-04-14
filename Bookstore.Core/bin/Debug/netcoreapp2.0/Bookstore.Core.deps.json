@@ -1,0 +1,38 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.0",
+    "signature": "3ff0c9f1799314cf2ed77d36dc5383d3b7ef124a"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.0": {
+      "Bookstore.Core/1.0.0": {
+        "dependencies": {
+          "iTextSharp": "5.5.13"
+        },
+        "runtime": {
+          "Bookstore.Core.dll": {}
+        }
+      },
+      "iTextSharp/5.5.13": {
+        "runtime": {
+          "lib/itextsharp.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Bookstore.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "iTextSharp/5.5.13": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Vukh80ACfWR5hKBCfPobpUny/icva7SRmauowXWTg8N0TGvDqsbrL4Vq6UdWI/fJCsiNfu4mC4zbcxdr7KlIoA==",
+      "path": "itextsharp/5.5.13",
+      "hashPath": "itextsharp.5.5.13.nupkg.sha512"
+    }
+  }
+}

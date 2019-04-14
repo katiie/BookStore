@@ -1,0 +1,123 @@
+﻿@model Bookstore.Core.Models.Book
+@using Bookstore.Core.Models;
+@{
+    ViewData["Title"] = "Book Details";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    var Quantity = Model.Stocks != null ? Model.Stocks.Sum(g => g.Quantity - g.Dispatched) : 0;
+}
+@section styles{
+    <style>
+        div.pac-container {
+            z-index: 99999999999 !important;
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBO9JH-hp8L1Sl6M-l4Ml_uQZ-NWe09XbA&libraries=places"
+            async defer></script>
+}
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header ">
+                    <h3 class="card-title "><b>@Model.Name </b> Detail</h3>
+                </div>
+                <div class="card-body">
+                    <dl class="dl-horizontal">
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ISBN)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.ISBN)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Author)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Author)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Description)
+                        </dd>
+                        <dt>
+                            @Html.DisplayName("Quantity Available")
+                        </dt>
+                        <dd>
+                            <p>
+                                @Quantity
+                            </p>
+                        </dd>
+                    </dl>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Stock</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="toolbar">
+                                <p>
+                                    Stocks ordered by location
+                                </p>
+
+                            </div>
+                            <div class="table-responsive m-t-40">
+                                <table id="datatable2" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Loctaion</th>
+                                            <th>Quantity</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+
+                                            if (Model.Stocks != null)
+                                            {
+                                                foreach (var item in Model.Stocks)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @item.Store.Name
+                                                        </td>
+                                                        <td>
+                                                            @item.Store.Address
+                                                        </td>
+                                                        <td>
+                                                            @item.Quantity
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Loctaion</th>
+                                            <th>Quantity</th>
+
+
+                                        </tr>
+                                    </tfoot>
+
+                                </table>
+                            </div>
+                        </div>
+                        <!-- end content-->
+                    </div>
+
+                    <!--  end card  -->
+                </div>
+                <!-- end col-md-12 -->
+            </div>
+            <!-- end row -->
+            <a href="@Url.Action("Books", "Home")">
+                Back to list
+            </a>
+        </div>
+    </div>
+</div>

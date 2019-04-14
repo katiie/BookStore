@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Stores";
+    Layout = "~/Views/Shared/_UserLayout.cshtml"; ;
+}
+
+
+<style>
+    /* Set the size of the div element that contains the map */
+    #map {
+        height: 500px; /* The height is 400 pixels */
+        width: 100%; /* The width is the width of the web page */
+    }
+</style>
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header ">
+                    <h3 class="card-title "><b>Available Stores for  </b> Books</h3>
+                </div>
+                <!--The div element for the map -->
+                <div class="card-body">
+                    <div id="map"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                <script>
+        var markers;
+
+
+        window.onload = function () {
+            $.post("/home/AllStores",
+                function (data, status) {
+                    console.log(data)
+                    var objecf = [];
+                    $.each(data, function (index, value) {
+                        console.log(value);
+                        objecf.push(value);
+                   })
+                    markers = objecf;
+                    console.log(markers)
+                    LoadMap();
+            });
+
+    }
+    function LoadMap() {
+        var mapOptions = {
+            center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+            zoom: 10,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var infoWindow = new google.maps.InfoWindow();
+        var latlngbounds = new google.maps.LatLngBounds();
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        for (var i = 0; i < markers.length; i++) {
+            var data = markers[i]
+            var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                title: data.title
+            });
+            (function (marker, data) {
+                google.maps.event.addListener(marker, "click", function (e) {
+                    infoWindow.setContent("<div style = 'width:200px;min-height:40px'>" + data.name + "</div>");
+                    infoWindow.open(map, marker);
+                });
+            })(marker, data);
+            latlngbounds.extend(marker.position);
+        }
+        var bounds = new google.maps.LatLngBounds();
+        map.setCenter(latlngbounds.getCenter());
+        map.fitBounds(latlngbounds);
+    }
+                </script>
+                <!--Load the API from the specified URL
+                * The async attribute allows the browser to render the page while the API loads
+                * The key parameter will contain your own API key (which is not needed for this tutorial)
+                * The callback parameter executes the initMap() function
+                -->
+                <script async defer
+                        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBO9JH-hp8L1Sl6M-l4Ml_uQZ-NWe09XbA&callback=initMap">
+                </script>

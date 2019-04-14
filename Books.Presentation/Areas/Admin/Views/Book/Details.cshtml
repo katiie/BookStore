@@ -1,0 +1,340 @@
+﻿@model Bookstore.Core.Models.Book
+@using Bookstore.Core.Models;
+@{
+    ViewData["Title"] = "Book Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+   
+   
+}
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header ">
+                 <h3 class="card-title "><b>@Model.Name </b> Detail</h3> 
+                </div>
+                <div class="card-body">
+                    <dl class="dl-horizontal">
+
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ISBN)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.ISBN)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Author)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Author)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Description)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.DateModified)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.DateModified)
+                        </dd>
+                    </dl>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Stock</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="toolbar">
+                                <p>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bookStockModal" data-isnew="true">
+                                        New Stock By Location
+                                    </button>
+
+
+                                </p>
+
+                            </div>
+                            <div class="table-responsive m-t-40">
+                                <table id="datatable2" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Store Name</th>
+                                            <th>Address</th>
+                                            <th>Quantity</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Store Name</th>
+                                            <th>Address</th>
+                                            <th>Quantity</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+
+                                        </tr>
+                                    </tfoot>
+
+                                </table>
+                            </div>
+                        </div>
+                        <!-- end content-->
+                    </div>
+                    <!--  end card  -->
+                </div>
+                <!-- end col-md-12 -->
+            </div>
+            <!-- end row -->
+            <a href="@Url.Action("Index", "Book", new { Area = "Admin" })">
+                Back to list
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="bookStockModal" tabindex="-1" role="dialog" aria-labelledby="bookModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Stock</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="bookform">
+                    @Html.AntiForgeryToken()
+                    <input hidden name="actionType" id="actionType" />
+                    <input hidden name="Id" id="Id" />
+                    <input hidden name="BookId" id="BookId"/>
+
+                    <input hidden name="Dispatched" id="dispatched" />
+
+                    <div class="row">
+                       
+                        <div class="col-md-12">
+                            <div class="form-group selectdiv">
+                                <label class="bmd-label-floating">Store Address</label>
+                                @Html.DropDownList("StoreId", null, htmlAttributes: new
+                            {
+                                @id = "blocation",
+                                @class = "custom-select col-12 ",
+
+                                @required = "required"
+                            })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="">Quantity</label>
+                                <input class="bqunatity form-control"  onkeypress="return isNumberKey(event)" type="number"  required id="bquantity" name="Quantity" />
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <br/>
+                    <br/>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="bsubmit btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script>
+        var table; // use a global for the submit and return data rendering in the examples
+
+        var stockurl = 'AllStocks?sid=' + '@Model.Id'
+        $(function () {
+            'use strict';
+            table = $('#datatable2').DataTable({
+                bLengthChange: true,
+                searching: true,
+                responsive: true,
+                "ajax": {
+                    "url": stockurl , "dataSrc": ""
+                },
+
+                columns: [
+
+                    { data: "name" },
+                    { data: "location" },
+                    { data: "quantity" },
+                    { data: "id" },
+
+                    {
+                        data: null,
+                        className: "",
+                        defaultContent: ' <a href="" class="btn btn-default editor_edit">Edit</a>  <a href="" class="btn btn-danger editor_remove">Delete</a>'
+                    },
+                    {
+                        data: "storeId"
+
+                    }
+                ],
+                "columnDefs": [
+                    {
+                        "targets": [3],
+                        "visible": false,
+                        "searchable": false,
+                        "orderable": false
+
+                    },
+                    {
+                        "targets": [5],
+                        "visible": false,
+                        "searchable": false,
+                        "orderable": false
+
+                    }
+
+                ]
+            });
+            $('#bookStockModal').on('show.bs.modal', function (event) {
+                $('#BookId').val('@Model.Id');
+            })
+            $('#datatable2 tbody').on('click', 'a.editor_edit', function (e) {
+                e.preventDefault();
+                var $td = table.row($(this).parents('tr')).data();
+                console.log($td.location)
+                $('.bsubmit').html('Save')
+                $('#Id').val($td.id);
+                $('#bquantity').val($td.quantity);
+                $('.bdispatched').val($td.dispatched);
+                $('#blocation').val($td.storeId);
+                $('#actionType').val('Update');
+                $('#bookStockModal').modal('show');
+                $('#BookId').val('@Model.Id');
+            });
+
+            // Delete a record
+            $('#datatable2 tbody').on('click', 'a.editor_remove', function (e) {
+                e.preventDefault();
+                var $td = table.row($(this).parents('tr')).data();
+                var title = $td.location;
+                var id = $td.id;
+                var txt;
+                var res = confirm("All books asscoiated with this " + title + " !", );
+                if (res == true) {
+                    $.ajax
+                        ({
+                            type: "POST",
+                            url: 'DeleteStock?Id=' + id,
+                            contentType: false,
+                            processData: false,
+                            success: function (result) {
+                                debugger;
+                                if (result.status) {
+                                    table.ajax.reload();
+                                    $('#bookModal').modal('hide');
+                                } else {
+                                    console.log("An error occured");
+                                    $('#bookModal').modal('hide');
+                                }
+
+                            },
+                            error: function (xhr, status, p3, p4) {
+                                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                                if (xhr.responseText && xhr.responseText[0] === "{")
+                                    err = JSON.parse(xhr.responseText).Message;
+                                console.log(err);
+                                clearModal();
+                                $('#bookModal').modal('hide');
+
+                            }
+                        });
+
+                }
+            });
+        });
+
+        //<!--submit form Ajax calls-- >
+        $('.bsubmit').on('click', function (event) {
+            event.preventDefault();
+
+            var url = "/Admin/Book/UpdateStock";
+            $('body').loading({
+                stoppable: false
+            });
+            var form = $(this).parents('form:first');
+            var validator = $("#bookform").validate({
+                errorPlacement: function (error, element) {
+                    $(element).parents('.form-group').append(error)
+                }
+            });
+
+            var result = form.valid();
+            if (result) {
+                var data = new FormData();
+                var form = $(this).closest('form');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+                $.each(form.serializeArray(), function (key, input) {
+                    data.append(input.name, input.value);
+                });
+                console.log(data)
+                $.ajax
+                    ({
+                        type: "Post",
+                        url: url,
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        success: function (result) {
+                            debugger
+                            $message = result.message;
+                            $status = result.status;
+                            if (result.status) {
+                                table.ajax.reload();
+                               
+                                $('#bookStockModal').modal('hide');
+                            }
+                            else {
+                                alert($message )
+                                $status = "error";
+
+                            }
+                            $('body').loading('stop');
+
+                        },
+                        error: function (xhr, status, p3, p4) {
+                            $('body').loading('stop');
+                            var err = "Error " + " " + status + " " + p3 + " " + p4;
+                            if (xhr.responseText && xhr.responseText[0] === "{")
+                                err = JSON.parse(xhr.responseText).Message;
+                        }
+                    });
+            }
+            else {
+
+                var errors = validator.numberOfInvalids();
+                if (errors) {
+                    validator.errorList[0].element.focus();
+                }
+                $('body').loading('stop');
+            }
+        });
+
+
+    </script>
+
+  
+}

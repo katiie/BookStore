@@ -1,0 +1,17 @@
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Books.Presentation\bin\Debug\netcoreapp2.0\Books.Presentation.deps.json
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Books.Presentation\bin\Debug\netcoreapp2.0\Books.Presentation.runtimeconfig.json
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Books.Presentation\bin\Debug\netcoreapp2.0\Books.Presentation.runtimeconfig.dev.json
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Books.Presentation\bin\Debug\netcoreapp2.0\Books.Presentation.dll
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Books.Presentation\bin\Debug\netcoreapp2.0\Books.Presentation.pdb
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Books.Presentation\obj\Debug\netcoreapp2.0\Books.Presentation.csprojResolveAssemblyReference.cache
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Books.Presentation\obj\Debug\netcoreapp2.0\Books.Presentation.csproj.CoreCompileInputs.cache
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Books.Presentation\obj\Debug\netcoreapp2.0\Books.Presentation.AssemblyInfoInputs.cache
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Books.Presentation\obj\Debug\netcoreapp2.0\Books.Presentation.AssemblyInfo.cs
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Books.Presentation\obj\Debug\netcoreapp2.0\Books.Presentation.dll
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Books.Presentation\obj\Debug\netcoreapp2.0\Books.Presentation.pdb
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Books.Presentation\bin\Debug\netcoreapp2.0\Bookstore.Core.dll
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Books.Presentation\bin\Debug\netcoreapp2.0\Bookstore.Data.dll
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Books.Presentation\bin\Debug\netcoreapp2.0\Bookstore.Service.dll
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Books.Presentation\bin\Debug\netcoreapp2.0\Bookstore.Core.pdb
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Books.Presentation\bin\Debug\netcoreapp2.0\Bookstore.Service.pdb
+C:\Users\LENOVO\Documents\Visual Studio 2017\Projects\BookStore\Books.Presentation\bin\Debug\netcoreapp2.0\Bookstore.Data.pdb
